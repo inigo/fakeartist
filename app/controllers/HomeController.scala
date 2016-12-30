@@ -1,8 +1,13 @@
 package controllers
 
+import java.io.File
 import javax.inject._
-import play.api._
+
 import play.api.mvc._
+
+import scala.io
+import scala.io.Source
+import scala.util.Random
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -22,3 +27,22 @@ class HomeController @Inject() extends Controller {
   }
 
 }
+
+class SubjectChooser(csv: File) {
+  private val subjects: List[Subject] = readFile(csv)
+
+  private def readFile(csv: File) = {
+    (for (line <- Source.fromFile(csv)(io.Codec.UTF8).getLines()) yield {
+      line.split(",", 2) match {
+        case Array(word, category) => Subject(word, category)
+      }
+    }).toList
+  }
+
+  def choose(): Subject = {
+    subjects( Random.nextInt(subjects.length) )
+  }
+
+}
+
+case class Subject(word: String, category: String)
