@@ -1,0 +1,23 @@
+@(game: Game)
+
+@main(game.name) {
+    <h1>@game.name</h1>
+
+    <section>
+        <h2>Players</h2>
+        <ul>
+            @game.players.map { p =>
+                <li><a href="@routes.HomeController.showSubject(game.name, p.name)">@p.name</a></li>
+            }
+        </ul>
+
+        <form action="@routes.HomeController.resetGame(game.name)" method="post">
+            <button type="submit" class="btn btn-danger">Reset this game</button>
+        </form>
+    </section>
+
+
+
+}
+
+

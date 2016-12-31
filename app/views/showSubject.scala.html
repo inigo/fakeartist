@@ -1,0 +1,23 @@
+@(game: Game, player: User, isFake: Boolean)
+
+@main(game.name) {
+    <h1>@game.name</h1>
+
+    <section>
+        <h2>Artist: @player.name</h2>
+
+        <h3>Category is @game.subject.category</h3>
+
+        @if(isFake) {
+            <h3>You are the fake!</h3>
+        } else {
+            <h3>The word is @game.subject.word</h3>
+        }
+
+    </section>
+
+
+
+}
+
+

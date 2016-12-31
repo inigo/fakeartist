@@ -11,33 +11,53 @@ import scala.io.Source
 import scala.util.Random
 
 /**
- * This controller creates an `Action` to handle HTTP requests to the
- * application's home page.
+ *
  */
 @Singleton
 class HomeController @Inject() extends Controller {
 
   val games = new GamesManager(new SubjectChooser(new File("conf/categories.csv")))
 
-  /**
-   * Create an Action to render an HTML page with a welcome message.
-   * The configuration in the `routes` file means that this method
-   * will be called when the application receives a `GET` request with
-   * a path of `/`.
-   */
+
   def index = Action {
-    Ok(views.html.index("Your new application is ready."))
+    val allGames = games.listGames()
+    Ok(views.html.index(allGames))
   }
 
-  def createGame() = play.mvc.Results.TODO
+  //noinspection TypeAnnotation
+  def createGame() = Action(parse.urlFormEncoded) { request =>
+    val name = request.body("name").head
+    val playersText = request.body("players").head
+    val players = playersText.split("\n").map(_.trim).filterNot(_.isEmpty).map(User).toList
 
-  def showSubject(game: String, user: String) = play.mvc.Results.TODO
+    val newGame = games.createGame(name.trim, players)
 
-  def resetGame(game: String) = play.mvc.Results.TODO
+    Redirect(routes.HomeController.showGame(newGame.name))
+  }
+
+  def showGame(name: String) = Action {
+    val game = games.getGame(name)
+    Ok(views.html.showGame(game))
+  }
+
+  def showSubject(name: String, userName: String) = Action {
+    val game = games.getGame(name)
+    val user = User(userName)
+    val isFake = game.fakeArtist == user
+
+    Ok(views.html.showSubject(game, user, isFake))
+  }
+
+  def resetGame(name: String) = Action {
+    val newGame = games.resetGame(name)
+    Redirect(routes.HomeController.showGame(newGame.name))
+  }
 }
 
 class GamesManager(subjectChooser: SubjectChooser) {
   private val games = mutable.Map[String, Game]()
+
+  def listGames(): List[Game] = games.values.toList
 
   def createGame(name: String, players: List[User]): Game = {
     val newGame = Game(name, players, subjectChooser.choose(), selectFake(players))

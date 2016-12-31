@@ -4,7 +4,8 @@
 
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
-POST    /game                       controllers.HomeController.createGame
+POST    /game/create                controllers.HomeController.createGame
+GET     /game/:game                 controllers.HomeController.showGame(game)
 GET     /game/:game/user/:user      controllers.HomeController.showSubject(game, user)
 POST    /game/:game/reset           controllers.HomeController.resetGame(game)
 

@@ -1,20 +1,37 @@
-@*
- * This template takes a single argument, a String containing a
- * message to display.
- *@
-@(message: String)
+@(games: Seq[Game])
 
-@*
- * Call the `main` template with two arguments. The first
- * argument is a `String` with the title of the page, the second
- * argument is an `Html` object containing the body of the page.
- *@
-@main("Welcome to Play") {
+@main("Games list") {
+    <h1>Fake Artist Visits New York automated question master</h1>
 
-    @*
-     * Get an `Html` object by calling the built-in Play welcome
-     * template and passing a `String` message.
-     *@
-    @play20.welcome(message, style = "Scala")
+    @if(games.nonEmpty) {
+        <section>
+            <h2>Current games</h2>
+            <ul>
+            @games.map { g =>
+                <li><a href="@routes.HomeController.showGame(g.name)">@g.name</a></li>
+            }
+            </ul>
+        </section>
+    }
+
+    <section>
+        <h2>Create a new game</h2>
+
+        <div>
+            <form action="@routes.HomeController.createGame()" method="post">
+                <div class="form-group">
+                    <label for="name">Game name</label>
+                    <input type="text" name="name" id="name" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="players">Player names (one per line)</label>
+                    <textarea name="players" id="players" class="form-control" rows="10"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create game</button>
+            </form>
+        </div>
+    </section>
 
 }
