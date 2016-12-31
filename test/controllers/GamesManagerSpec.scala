@@ -1,12 +1,10 @@
 package controllers
 
-import java.io.File
-
 import org.specs2.mutable.Specification
 
 class GamesManagerSpec extends Specification {
 
-  lazy val manager = new GamesManager(new SubjectChooser(new File("conf/categories.csv")))
+  lazy val manager = new GamesManager(new SubjectChooser(this.getClass.getResourceAsStream("/categories.csv")))
   val users = List(User("red fish"), User("blue fish"))
 
   "managing games" should {

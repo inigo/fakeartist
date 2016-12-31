@@ -1,6 +1,6 @@
 package controllers
 
-import java.io.File
+import java.io.{File, InputStream}
 import javax.inject._
 
 import play.api.mvc._
@@ -13,7 +13,7 @@ import scala.util.Random
 @Singleton
 class HomeController @Inject() extends Controller {
 
-  val games = new GamesManager(new SubjectChooser(new File("conf/categories.csv")))
+  val games = new GamesManager(new SubjectChooser(this.getClass.getResourceAsStream("/categories.csv")))
 
 
   def index = Action {
@@ -77,11 +77,11 @@ class GamesManager(subjectChooser: SubjectChooser) {
 
 }
 
-class SubjectChooser(csv: File) {
+class SubjectChooser(csv: InputStream) {
   private val subjects: List[Subject] = readFile(csv)
 
-  private def readFile(csv: File) = {
-    (for (line <- Source.fromFile(csv)(io.Codec.UTF8).getLines()) yield {
+  private def readFile(csv: InputStream) = {
+    (for (line <- Source.fromInputStream(csv)(io.Codec.UTF8).getLines()) yield {
       line.split(",", 2) match {
         case Array(word, category) => Subject(word, category)
       }
