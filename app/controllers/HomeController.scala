@@ -10,9 +10,6 @@ import scala.io
 import scala.io.Source
 import scala.util.Random
 
-/**
- *
- */
 @Singleton
 class HomeController @Inject() extends Controller {
 
