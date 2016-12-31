@@ -5,6 +5,7 @@ import javax.inject._
 
 import play.api.mvc._
 
+import scala.collection.mutable
 import scala.io
 import scala.io.Source
 import scala.util.Random
@@ -16,6 +17,8 @@ import scala.util.Random
 @Singleton
 class HomeController @Inject() extends Controller {
 
+  val games = new GamesManager(new SubjectChooser(new File("conf/categories.csv")))
+
   /**
    * Create an Action to render an HTML page with a welcome message.
    * The configuration in the `routes` file means that this method
@@ -25,6 +28,35 @@ class HomeController @Inject() extends Controller {
   def index = Action {
     Ok(views.html.index("Your new application is ready."))
   }
+
+  def createGame() = play.mvc.Results.TODO
+
+  def showSubject(game: String, user: String) = play.mvc.Results.TODO
+
+  def resetGame(game: String) = play.mvc.Results.TODO
+}
+
+class GamesManager(subjectChooser: SubjectChooser) {
+  private val games = mutable.Map[String, Game]()
+
+  def createGame(name: String, players: List[User]): Game = {
+    val newGame = Game(name, players, subjectChooser.choose(), selectFake(players))
+    games(name) = newGame
+    newGame
+  }
+
+  def getGame(name: String): Game = {
+    games(name)
+  }
+
+  def resetGame(name: String): Game = {
+    val existingGame = games(name)
+    val updatedGame = existingGame.copy( subject = subjectChooser.choose(), fakeArtist = selectFake(existingGame.players) )
+    games(name) = updatedGame
+    updatedGame
+  }
+
+  private def selectFake(players: List[User]) = players( Random.nextInt(players.length) )
 
 }
 
@@ -45,4 +77,6 @@ class SubjectChooser(csv: File) {
 
 }
 
+case class User(name: String)
+case class Game(name: String, players: List[User], subject: Subject, fakeArtist: User)
 case class Subject(word: String, category: String)
