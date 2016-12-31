@@ -5,7 +5,7 @@
 
     <section>
         <h2>Players</h2>
-        <ul>
+        <ul class="players">
             @game.players.map { p =>
                 <li><a href="@routes.HomeController.showSubject(game.name, p.name)">@p.name</a></li>
             }
