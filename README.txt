@@ -3,6 +3,18 @@ Automated question setter for Fake Artist Goes To New York
 
 You will need a copy of the game to play.
 
+== Hosting ==
+
+There is a hosted version of this at http://fakeartistquestions.herokuapp.com which
+is kept up-to-date with the latest GitHub code. This is hosted using Heroku's free
+tier, so won't always be available.
+
+== Data ==
+
+The categories and subjects are taken from the conf/categories.csv file.
+This is based on a Google doc collaboratively created by BoardGameGeek members.
+If you'd like more things in it, please send me pull requests.
+
 == License ==
 
 Copyright (C) 2016 Inigo Surguy
