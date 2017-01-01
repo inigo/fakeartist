@@ -49,6 +49,10 @@ class HomeController @Inject() extends Controller {
     val newGame = games.resetGame(name)
     Redirect(routes.HomeController.showGame(newGame.name))
   }
+
+  def about() = Action {
+    Ok(views.html.about())
+  }
 }
 
 class GamesManager(subjectChooser: SubjectChooser) {

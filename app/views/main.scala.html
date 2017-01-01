@@ -14,6 +14,17 @@
     <body>
         <div class="container-fluid">
             @content
+
+            <div class="row">
+                <div class="col-sm-1 pull-right">
+                    <div class="pull-right">
+                        <ul class="list-inline">
+                            <li><a href="@routes.HomeController.index()">Home</a></li>
+                            <li><a href="@routes.HomeController.about()">About</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>
