@@ -61,12 +61,6 @@ blender,electronic device
 boombox,electronic device
 jukebox,electronic device
 camera,electronic device
-gandalf,fantasy
-griffin,fantasy
-festivus,festivity
-hanukkah,festivity
-kwanzaa,festivity
-wedding,festivity
 baguette,food
 broccoli,food
 espresso,food
@@ -168,6 +162,7 @@ unicorn,mythology
 vampire,mythology
 dragon,mythology
 werewolf,mythology
+griffin,mythology
 doorknob,object
 doorstep,object
 elevator,object
@@ -210,6 +205,7 @@ bowser,pop culture
 asterix,pop culture
 superman,pop culture
 hawkeye,pop culture
+gandalf,pop culture
 assassin,profession
 director,profession
 gangster,profession
