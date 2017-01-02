@@ -12,8 +12,8 @@ tier, so won't always be available.
 == Data ==
 
 The categories and subjects are taken from the conf/categories.csv file.
-This is based on a Google doc collaboratively created by BoardGameGeek members.
-If you'd like more things in it, please send me pull requests.
+This is based on a Google doc collaboratively created by "alenros" from the BoardGameGeek
+forums, and other BGG users. If you'd like more things in it, please send me pull requests.
 
 == License ==
 
